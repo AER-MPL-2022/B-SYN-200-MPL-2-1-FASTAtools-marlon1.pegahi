@@ -1,0 +1,6 @@
+.vscode
+a.out
+FASTAtools
+*.o
+ex.fasta
+fasta.exemple
