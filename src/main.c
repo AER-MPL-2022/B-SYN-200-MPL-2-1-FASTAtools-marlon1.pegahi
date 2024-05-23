@@ -7,6 +7,7 @@
 
 #include "fastatools.h"
 #include "alpha_majmin.h"
+#include "linked_string.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -28,9 +29,24 @@ void skip_line(void)
     write(1, "\n", 1);
 }
 
-int not_dna_line(char c, int *first)
+static int not_dna_line(char c, int *first)
 {
     if (c == '>') {
+        if (*first == 1)
+            write(1, "\n", 1);
+        else
+            *first = 1;
+        write(1, &c, 1);
+        skip_line();
+        return 1;
+    }
+    return 0;
+}
+
+static int not_dna_line_reverse(char c, int *first, linked_string_t *dna)
+{
+    if (c == '>') {
+        print_reverse_string(dna);
         if (*first == 1)
             write(1, "\n", 1);
         else
@@ -78,6 +94,49 @@ static void rna_sequences(void)
     write(1, "\n", 1);
 }
 
+static void change_char_for_reverse(char *c)
+{
+    if (is_alphamin(*c))
+        *c -= 32;
+    switch (*c) {
+        case 'T':
+            *c = 'A';
+            break;
+        case 'G':
+            *c = 'C';
+            break;
+        case 'C':
+            *c = 'G';
+            break;
+        case 'A':
+            *c = 'T';
+            break;
+        default:
+            break;
+    }
+}
+
+static void reverse_complement_sequences(void)
+{
+    char c = 0;
+    int first = 0;
+    linked_string_t *dna = create_string('\0');
+
+    while (read(0, &c, 1) > 0) {
+        if (not_dna_line_reverse(c, &first, dna)) {
+            clear_string(&dna);
+            dna = create_string('\0');
+            continue;
+        }
+        if (!is_dnachar(c))
+            continue;
+        change_char_for_reverse(&c);
+        add_char(dna, c);
+    }
+    print_reverse_string(dna);
+    write(1, "\n", 1);
+}
+
 int main(int argc, char const *argv[])
 {
     if (argc != 2) {
@@ -90,6 +149,9 @@ int main(int argc, char const *argv[])
             break;
         case 2:
             rna_sequences();
+            break;
+        case 3:
+            reverse_complement_sequences();
             break;
         default:
             write(2, "Invalid argument\n", 18);

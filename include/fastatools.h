@@ -6,3 +6,5 @@
 */
 
 #pragma once
+
+void my_revstr(char *str);

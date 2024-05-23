@@ -6,7 +6,10 @@
 ##
 
 SRC = src/main.c \
-		src/alpha_majmin.c
+		src/alpha_majmin.c \
+		src/linked_string/linked_string.c \
+		src/linked_string/linked_string_bis.c \
+		src/my_revstr.c
 
 OBJ = $(SRC:.c=.o)
 
