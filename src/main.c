@@ -42,7 +42,7 @@ int not_dna_line(char c, int *first)
     return 0;
 }
 
-void dna_sequences(void)
+static void dna_sequences(void)
 {
     char c = 0;
     int first = 0;
@@ -54,7 +54,26 @@ void dna_sequences(void)
             continue;
         if (is_alphamin(c))
             c -= 32;
-        write(1, & c, 1);
+        write(1, &c, 1);
+    }
+    write(1, "\n", 1);
+}
+
+static void rna_sequences(void)
+{
+    char c = 0;
+    int first = 0;
+
+    while (read(0, &c, 1) > 0) {
+        if (not_dna_line(c, &first))
+            continue;
+        if (!is_dnachar(c))
+            continue;
+        if (is_alphamin(c))
+            c -= 32;
+        if (c == 'T')
+            c = 'U';
+        write(1, &c, 1);
     }
     write(1, "\n", 1);
 }
@@ -68,6 +87,9 @@ int main(int argc, char const *argv[])
     switch (atoi(argv[1])) {
         case 1:
             dna_sequences();
+            break;
+        case 2:
+            rna_sequences();
             break;
         default:
             write(2, "Invalid argument\n", 18);
