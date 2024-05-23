@@ -23,15 +23,16 @@ int is_alphanumeric(char c)
 
 char *my_strcapitalize_synthesis(char *str)
 {
-    char *ans = malloc(sizeof(char) * (my_strlen(str) + 1));
+    int i = 0;
 
-    for (int i = 0; str[i] != '\0'; i++) {
+    for (; str[i] != '\0'; i++) {
         if (str[i] >= 'a' && str[i] <= 'z'
         && (i == 0 || !is_alphanumeric(str[i - 1]))) {
-                ans[i] = str[i] - 32;
+                str[i] = str[i] - 32;
         } else {
-            ans[i] = str[i];
+            str[i] = str[i];
         }
     }
-    return ans;
+    str[i] = '\0';
+    return str;
 }
