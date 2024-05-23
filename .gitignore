@@ -4,3 +4,4 @@ FASTAtools
 *.o
 ex.fasta
 fasta.exemple
+*.fasta
