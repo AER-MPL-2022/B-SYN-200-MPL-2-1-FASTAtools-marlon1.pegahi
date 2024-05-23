@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
     }
     switch (argv[1][0]) {
         case '1': dna_sequences(); break;
-        default: write(2, "Invalid argument\n", 18); break;
+        default: write(2, "Invalid argument\n", 18); return 84;
     }
     return 0;
 }
