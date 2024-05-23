@@ -5,6 +5,8 @@
 ** alpha_majmin.h
 */
 
+#pragma once
+
 int is_alphanumeric(char c);
 int is_alphamin(char c);
 int is_alphamaj(char c);

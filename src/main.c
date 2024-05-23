@@ -66,8 +66,12 @@ int main(int argc, char const *argv[])
         return 84;
     }
     switch (atoi(argv[1])) {
-        case 1: dna_sequences(); break;
-        default: write(2, "Invalid argument\n", 18); return 84;
+        case 1:
+            dna_sequences();
+            break;
+        default:
+            write(2, "Invalid argument\n", 18);
+            return 84;
     }
     return 0;
 }
