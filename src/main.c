@@ -33,7 +33,7 @@ int run_fastatools(int argc, char const *argv[])
 
 int main(int argc, char const *argv[])
 {
-    if (argc != 2) {
+    if (argc < 2) {
         write(2, "Invalid number of arguments\n", 28);
         return 84;
     }
