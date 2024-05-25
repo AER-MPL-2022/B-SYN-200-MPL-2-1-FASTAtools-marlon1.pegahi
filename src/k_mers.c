@@ -54,13 +54,17 @@ void k_mers_sequences(int argc, char const *argv[])
 
     (void)k;
     while (read(0, &c, 1) > 0) {
-        if (not_dna_line_k_mers(c, dna, k_mers))
+        if (not_dna_line_k_mers(c, dna, k_mers)) {
+            clear_string(&dna);
+            dna = create_string('\0');
             continue;
+        }
         if (!is_dnachar(c))
             continue;
         if (is_alphamin(c))
             c -= 32;
         add_char(dna, c);
     }
+    add_node(k_mers, linked_string_to_string(dna));
     print_list(k_mers);
 }
