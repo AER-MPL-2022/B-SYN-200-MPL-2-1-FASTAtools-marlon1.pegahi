@@ -6,10 +6,16 @@
 ##
 
 SRC = src/main.c \
+		src/dna.c \
+		src/rna.c \
+		src/reverse.c \
+		src/k_mers.c \
+		src/fastatools.c \
 		src/alpha_majmin.c \
 		src/linked_string/linked_string.c \
 		src/linked_string/linked_string_bis.c \
-		src/my_revstr.c
+		src/linked_list/linked_list.c \
+		src/linked_list/linked_list_bis.c
 
 OBJ = $(SRC:.c=.o)
 
