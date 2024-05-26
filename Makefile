@@ -10,6 +10,7 @@ SRC = src/main.c \
 		src/rna.c \
 		src/reverse.c \
 		src/k_mers.c \
+		src/coding.c \
 		src/fastatools.c \
 		src/alpha_majmin.c \
 		src/linked_string/linked_string.c \

@@ -31,3 +31,6 @@ void reverse_complement_sequences(void);
 void k_mers_sequences(int argc, char const *argv[]);
 int not_dna_line_k_mers(char c, linked_string_t *dna, linked_list_t *k_mers);
 void k_mers_sequences(int argc, char const *argv[]);
+
+// coding sequences
+void coding_sequences(void);
