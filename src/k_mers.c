@@ -11,6 +11,7 @@
 #include "fastatools.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int k_mers_error_gestion(int argc, char const *argv[])
 {
@@ -45,6 +46,36 @@ int not_dna_line_k_mers(char c, linked_string_t *dna, linked_list_t *k_mers)
     return 0;
 }
 
+static void print_k_mers_bis(linked_list_t **tmp,
+    linked_list_t **new, char **str, int k)
+{
+    for (int i = 0; (*tmp)->data[i + k - 1]; i++) {
+        for (int j = 0; j < k; j++)
+            (*str)[j] = (*tmp)->data[i + j];
+        (*str)[k] = '\0';
+        add_node(*new, strdup(*str));
+    }
+}
+
+void print_k_mers(linked_list_t *k_mers, int k)
+{
+    linked_list_t *tmp = k_mers;
+    linked_list_t *new = create_node("\0");
+    char *str = malloc(sizeof(char) * (k + 1));
+
+    while (tmp) {
+        if ((int) strlen(tmp->data) < k) {
+            tmp = tmp->next;
+            continue;
+        }
+        print_k_mers_bis(&tmp, &new, &str, k);
+        tmp = tmp->next;
+    }
+    new = sort_linked_list(new);
+    remove_duplicates(new);
+    print_list(new);
+}
+
 void k_mers_sequences(int argc, char const *argv[])
 {
     char c = 0;
@@ -52,7 +83,6 @@ void k_mers_sequences(int argc, char const *argv[])
     linked_list_t *k_mers = create_node("\0");
     int k = k_mers_error_gestion(argc, argv);
 
-    (void)k;
     while (read(0, &c, 1) > 0) {
         if (not_dna_line_k_mers(c, dna, k_mers)) {
             clear_string(&dna);
@@ -66,5 +96,5 @@ void k_mers_sequences(int argc, char const *argv[])
         add_char(dna, c);
     }
     add_node(k_mers, linked_string_to_string(dna));
-    print_list(k_mers);
+    print_k_mers(k_mers, k);
 }

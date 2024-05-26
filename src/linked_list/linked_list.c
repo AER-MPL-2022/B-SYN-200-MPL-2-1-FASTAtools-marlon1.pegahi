@@ -38,8 +38,10 @@ void print_list(linked_list_t *list)
     linked_list_t *tmp = list;
 
     while (tmp) {
-        write(1, tmp->data, strlen(tmp->data));
-        write(1, "\n", 1);
+        if (tmp->data[0] != '\0') {
+            write(1, tmp->data, strlen(tmp->data));
+            write(1, "\n", 1);
+        }
         tmp = tmp->next;
     }
 }
